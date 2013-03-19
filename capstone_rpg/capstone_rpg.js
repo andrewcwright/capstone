@@ -8,9 +8,23 @@ goog.require('lime.Layer');
 goog.require('lime.fill.LinearGradient');
 goog.require('goog.math');
 goog.require('lime.GlossyButton');
+goog.require('goog.events.KeyCodes');
+goog.require('capstone_rpg.grass');
+goog.require('capstone_rpg.water');
+goog.require('capstone_rpg.stone');
 
 //entrypoint 
 capstone_rpg.start = function(){   
+    var gameObj = {
+        width: 352,
+        height: 256,
+        tile_size: 16,
+        num_tiles_x: 22,
+        num_tiles_y: 16,
+        landLayer_w: 32*22, 
+        landLayer_h: 32*16,
+    }
+
     //define director       
     var director = new lime.Director(document.body,352,256);     
     director.makeMobileWebAppCapable();     
@@ -19,16 +33,26 @@ capstone_rpg.start = function(){
     //create mapScene
     var mapScene = new lime.Scene();  
     var mapLayer = new lime.Layer().setPosition(0,0).setRenderer(lime.Renderer.CANVAS).setAnchorPoint(0,0);
-    var gameMap = new lime.Sprite().setSize(352,256).setFill('map.png').setPosition(0,0).setAnchorPoint(0,0);
+    // var gameMap = new lime.Sprite().setSize(352,256).setFill('map.png').setPosition(0,0).setAnchorPoint(0,0);
+
+    for(var i=0; i<gameObj.num_tiles_x; i++) {
+        for(var j=0; j<gameObj.num_tiles_y; j++) {
+            var landElement = new capstone_rpg.grass(gameObj).setPosition(i*gameObj.tile_size, j*gameObj.tile_size);
+            mapLayer.appendChild(landElement);
+        }
+    }
+
+    var stoneElement = new capstone_rpg.stone(gameObj).setPosition(16,0);
+    mapLayer.appendChild(stoneElement);
 
     //create mapScene hero
-    var hero = new lime.Sprite().setSize(47,40).setFill('spellun-sprite.png').setPosition(100,100);
+    var hero = new lime.Sprite().setSize(16,16).setFill('spellun-sprite.png').setPosition(8,8);
     hero.life = 20;
     hero.money = 100;
     hero.attack = 5;
 
     //create mapScene monster
-    var monster = new lime.Sprite().setSize(64,64).setFill('fenrir_wolf.png').setPosition(250, 200);
+    var monster = new lime.Sprite().setSize(32,32).setFill('fenrir_wolf.png').setPosition(128, 128);
     monster.life = 15;
     monster.money = 10;
     monster.attack = 1;
@@ -83,9 +107,31 @@ capstone_rpg.start = function(){
     }, hero);
 
     //mouse click event listener
-    goog.events.listen(gameMap, ['mousedown', 'touchstart'], function(e) {
-        var movement = new lime.animation.MoveTo(e.position.x, e.position.y).setDuration(1);
-        hero.runAction(movement);
+    // goog.events.listen(gameMap, ['mousedown', 'touchstart'], function(e) {
+    //     var movement = new lime.animation.MoveTo(e.position.x, e.position.y).setDuration(1);
+    //     hero.runAction(movement);
+    // });
+
+    //keypress event listener 
+    goog.events.listen(document, ['keydown'], function(e) {
+        var velocity = 16;
+        position = hero.getPosition();
+
+        if (e.keyCode == goog.events.KeyCodes.UP) {
+            position.y -= velocity;
+        }
+        if (e.keyCode == goog.events.KeyCodes.RIGHT) {
+            if (getFill(position.y-16) != capstone_rpg.stone.getFill()) {
+            position.x += velocity;
+            }
+        }
+        if (e.keyCode == goog.events.KeyCodes.DOWN) {
+            position.y += velocity;
+        }
+        if (e.keyCode == goog.events.KeyCodes.LEFT) {
+            position.x -= velocity;
+        }
+        hero.setPosition(position.x, position.y);
     });
 
     //run button click event
@@ -95,7 +141,7 @@ capstone_rpg.start = function(){
         mapLayer.setDirty(255);
         //move hero away from the monster so fightScene does not retrigger
         position = hero.getPosition();
-        hero.setPosition(position.x-60, position.y-60);
+        hero.setPosition(position.x=8, position.y=8);
         hero.inFightScene = false;
     });
 
@@ -132,7 +178,7 @@ capstone_rpg.start = function(){
         labelFighter2Life.setText('Life:' + monster.life);
     });
 
-    mapLayer.appendChild(gameMap);
+    //mapLayer.appendChild(gameMap);
     mapLayer.appendChild(hero);
     mapLayer.appendChild(monster);
     mapScene.appendChild(mapLayer);

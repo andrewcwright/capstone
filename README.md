@@ -8,7 +8,13 @@ This is my capstone project for the Nashville Software School. It uses the Craft
 03/18/2013 - MAJOR REDESIGN
 ===========================
 
-I have decided to move the project to the limeJS framework. You can run the game by going to the capstone_rpg directory and running the html file there. The current functionality allows the player to move around the screen with a mouseclick or screen tap. If the player moves on top of the wolf, the collision is detected and a fight scene engages. Collision detection with stone tiles works, but the player currently becomes stuck there.
+I have decided to move the project to the limeJS framework. You can run the game by going to the capstone_rpg directory and running the html file there. The current functionality allows the player to move around the screen with a mouseclick or screen tap. If the player moves on top of the wolf, the collision is detected and a fight scene engages. 
+
+===============================================
+03/19/2012 - More controls, collision detection
+===============================================
+
+I have added movement with the arrow keys. I changed the map to be dynamically generated from tile objects. The stone object has some problems with collision detection. The player will not move through it but becomes stuck on the object.
 
 ===================
 Future Design Goals

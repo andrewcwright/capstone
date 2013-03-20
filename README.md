@@ -8,7 +8,7 @@ This is my capstone project for the Nashville Software School. It uses the Craft
 03/18/2013 - MAJOR REDESIGN
 ===========================
 
-I have decided to move the project to the limeJS framework. You can run the game by going to the capstone_rpg directory and running the html file there. The current functionality allows the player to move around the screen with a mouseclick or screen tap. If the player moves on top of the wolf, the collision is detected and a fight scene engages. 
+I have decided to move the project to the limeJS framework. You can run the game by going to the capstone_rpg directory and running the html file there. The current functionality allows the player to move around the screen with a mouseclick or screen tap. If the player moves on top of the wolf, the collision is detected and a fight scene engages. In the fight scene the hero can either run or fight. If the hero runs he is returned to his starting position in the game. I he chooses to fight, a random number is used to calculate whether the hero hits the monster or vice-versa. The person who gets hit has the opponent's attack score subtracted from their life. This continues until someone is dead. I the heros wins the monster vanishes. Otherwise a game over message is displayed.
 
 ===============================================
 03/19/2012 - More controls, collision detection

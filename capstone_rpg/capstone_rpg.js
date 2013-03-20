@@ -118,35 +118,27 @@ capstone_rpg.start = function(){
         position = hero.getPosition();
 
         if (e.keyCode == goog.events.KeyCodes.UP) {
-            if (goog.math.Box.intersects(hero.getBoundingBox(), stoneElement.getBoundingBox())) {
-                return false;
-            }
-            else {
             position.y -= velocity;
-            }
-        }
-        if (e.keyCode == goog.events.KeyCodes.RIGHT) {
             if (goog.math.Box.intersects(hero.getBoundingBox(), stoneElement.getBoundingBox())) {
-                return false;
-            }
-            else {
-                position.x += velocity;
-            }
-        }
-        if (e.keyCode == goog.events.KeyCodes.DOWN) {
-            if (goog.math.Box.intersects(hero.getBoundingBox(), stoneElement.getBoundingBox())) {
-                return false;
-            }
-            else {            
                 position.y += velocity;
             }
         }
-        if (e.keyCode == goog.events.KeyCodes.LEFT) {
+        if (e.keyCode == goog.events.KeyCodes.RIGHT) {
+                position.x += velocity;
             if (goog.math.Box.intersects(hero.getBoundingBox(), stoneElement.getBoundingBox())) {
-                return false;
+                position.x -= velocity;
             }
-            else {
+        }
+        if (e.keyCode == goog.events.KeyCodes.DOWN) {
+                position.y += velocity;
+            if (goog.math.Box.intersects(hero.getBoundingBox(), stoneElement.getBoundingBox())) {
+                position.y -= velocity;
+            }
+        }
+        if (e.keyCode == goog.events.KeyCodes.LEFT) {
             position.x -= velocity;
+            if (goog.math.Box.intersects(hero.getBoundingBox(), stoneElement.getBoundingBox())) {
+                position.x += velocity;
             }
         }
         hero.setPosition(position.x, position.y);

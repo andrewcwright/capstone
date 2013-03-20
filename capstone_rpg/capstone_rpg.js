@@ -42,7 +42,7 @@ capstone_rpg.start = function(){
         }
     }
 
-    var stoneElement = new capstone_rpg.stone(gameObj).setPosition(16,0);
+    var stoneElement = new capstone_rpg.stone(gameObj).setPosition(32,0);
     mapLayer.appendChild(stoneElement);
 
     //create mapScene hero
@@ -118,18 +118,36 @@ capstone_rpg.start = function(){
         position = hero.getPosition();
 
         if (e.keyCode == goog.events.KeyCodes.UP) {
+            if (goog.math.Box.intersects(hero.getBoundingBox(), stoneElement.getBoundingBox())) {
+                return false;
+            }
+            else {
             position.y -= velocity;
+            }
         }
         if (e.keyCode == goog.events.KeyCodes.RIGHT) {
-            if (getFill(position.y-16) != capstone_rpg.stone.getFill()) {
-            position.x += velocity;
+            if (goog.math.Box.intersects(hero.getBoundingBox(), stoneElement.getBoundingBox())) {
+                return false;
+            }
+            else {
+                position.x += velocity;
             }
         }
         if (e.keyCode == goog.events.KeyCodes.DOWN) {
-            position.y += velocity;
+            if (goog.math.Box.intersects(hero.getBoundingBox(), stoneElement.getBoundingBox())) {
+                return false;
+            }
+            else {            
+                position.y += velocity;
+            }
         }
         if (e.keyCode == goog.events.KeyCodes.LEFT) {
+            if (goog.math.Box.intersects(hero.getBoundingBox(), stoneElement.getBoundingBox())) {
+                return false;
+            }
+            else {
             position.x -= velocity;
+            }
         }
         hero.setPosition(position.x, position.y);
     });

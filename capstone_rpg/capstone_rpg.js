@@ -46,7 +46,7 @@ capstone_rpg.start = function(){
     mapLayer.appendChild(stoneElement);
 
     //create mapScene hero
-    var hero = new lime.Sprite().setSize(16,16).setFill('spellun-sprite.png').setPosition(8,8);
+    var hero = new lime.Sprite().setSize(14,14).setFill('spellun-sprite.png').setPosition(8,8);
     hero.life = 20;
     hero.money = 100;
     hero.attack = 5;
